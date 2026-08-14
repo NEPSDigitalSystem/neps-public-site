@@ -1,6 +1,6 @@
 # NEPS Digital — Repository Summary & Status Report Resources
 
-This document contains copy-pasteable assets for Lead DevOps Engineer **Damien Nsoh Ayine** to share with immediate project coordinator **Dr. Linda A. Banning** for her status report.
+This document contains copy-pasteable assets for Lead DevOps Engineer **Damien Nsoh Ayine** to share with immediate project coordinator **Dr. Linda Banning** for her status report.
 
 ---
 
@@ -8,7 +8,7 @@ This document contains copy-pasteable assets for Lead DevOps Engineer **Damien N
 
 **Subject:** Read-only access and status mirror for NEPS Digital repositories
 
-Hi Dr. Linda,
+Hi Dr. Linda Banning,
 
 I trust you are doing well.
 
@@ -41,12 +41,12 @@ Lead DevOps & Infrastructure Engineer, NEPS Digital System
 
 *Note: You can copy and paste the Markdown table below directly into any Markdown editor or import it into Word/PDF reports.*
 
-| Repository | Purpose | Lead Developer / Owner | Last Activity | Commit Activity | Current Progress |
-| :--- | :--- | :--- | :---: | :---: | :---: |
-| **neps-infrastructure** | Docker Compose stack, monitoring dashboards, PITR backups, SSL reverse proxy | Damien | Aug 2026 | 67+ | 75% |
-| **neps-backend** | FastAPI API services, SQLAlchemy schemas, scheduler, REDCap proxy routing | Samuel | Aug 2026 | 32+ | 55% |
-| **neps-data-platform** | ETL pipelines, raw data warehouse loaders, sync orchestration CLI | Frank / Isaac | Aug 2026 | 19+ | 65% |
-| **neps-portal** | React Next.js web client dashboards, user login authentication, graphs | Eric / Ama / Ghazi | Aug 2026 | 45+ | 40% |
-| **neps-ml-ai** | Scikit-learn distress risk scoring models, NLP sentiment classifiers | Yasmine | Aug 2026 | 28+ | 30% |
-| **neps-docs** | Architecture mapping, deployment runbooks, data safety guidelines | Salamatu | Jul 2026 | 12+ | 15% |
-| **mock-redcap-service** | Hosted simulated REDCap server sandbox for offline validation | Utility | Aug 2026 | Sandbox | 100% |
+| Repository | Purpose | Lead Developer / Owner | Last Activity | Status |
+| :--- | :--- | :--- | :---: | :--- |
+| **neps-infrastructure** | Docker Compose stack, monitoring dashboards, PITR backups, SSL reverse proxy | Damien | Aug 2026 | Active Dev |
+| **neps-backend** | FastAPI API services, SQLAlchemy schemas, scheduler, REDCap proxy routing | Samuel | Aug 2026 | Active Dev |
+| **neps-data-platform** | ETL pipelines, raw data warehouse loaders, sync orchestration CLI | Frank / Isaac | Aug 2026 | Active Dev |
+| **neps-portal** | React Next.js web client dashboards, user login authentication, graphs | Eric / Ama / Ghazi | Aug 2026 | Partial Dev |
+| **neps-ml-ai** | Scikit-learn distress risk scoring models, NLP sentiment classifiers | Yasmine | Aug 2026 | Partial Dev |
+| **neps-docs** | Architecture mapping, deployment runbooks, data safety guidelines | Salamatu | Jul 2026 | Drafting |
+| **mock-redcap-service** | Hosted simulated REDCap server sandbox for offline validation | Utility | Aug 2026 | Live |

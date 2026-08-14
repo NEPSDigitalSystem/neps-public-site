@@ -325,7 +325,7 @@
     <div class="org-tag">NEPSDigitalSystem &nbsp;·&nbsp; Public Report</div>
     <h1>NEPS Digital System</h1>
     <p class="hero-sub">
-        Public-facing status report for the <strong style="color:var(--navy-mid)">National Early Psychosis Study (NEPS)</strong> digital platform — a multi-country youth mental health research initiative.
+        Public-facing status report for the <strong style="color:var(--navy-mid)">Navigating Educational Pressures and Stressors (NEPS)</strong> digital platform — a multi-country youth mental health research initiative.
     </p>
     <div class="hero-pills">
         <span class="hero-pill"><span class="dot"></span> Multi-Site Research</span>
@@ -388,11 +388,11 @@
         <ul class="blocker-list">
             <li>
                 <span class="bl-dot"></span>
-                <span><strong>Case Report Forms (CRFs)</strong> pending finalisation by Prof. Obed before REDCap API credentials are issued by KCIRD</span>
+                <span><strong>Case Report Forms (CRFs)</strong> pending finalisation by Prof. Obed Brew before REDCap API credentials are issued by KCIRD</span>
             </li>
             <li>
                 <span class="bl-dot"></span>
-                <span><strong>User stories and wireframes</strong> pending approval by Dr. Linda (PI) before frontend development proceeds</span>
+                <span><strong>User stories and wireframes</strong> pending approval by Dr. Linda Banning (PI) before frontend development proceeds</span>
             </li>
             <li>
                 <span class="bl-dot"></span>
@@ -418,25 +418,26 @@
                     The platform integrates <strong>REDCap</strong> for structured psychosocial data collection, an <strong>AI/ML distress engine</strong> for real-time risk scoring (PHQ-9, GAD-7, suicidality screening), and role-based clinical dashboards for Investigators, Country Leads, Enumerators, and System Administrators.
                 </p>
                 <p>
-                    Infrastructure is hosted <strong>on-premises at KNUST/CAIH, Ghana</strong>, with VPN-secured access for field teams in Sierra Leone and Tanzania. No patient data is transmitted to external cloud services.
+                    Infrastructure is planned to be hosted <strong>on-premises at KNUST/CAIH, Ghana</strong>, with VPN-secured access for field teams in Sierra Leone and Tanzania once the system is production-ready. Currently, this multi-country deployment is not yet in place.
                 </p>
             </div>
             <div class="ctx-card">
-                <h3>Country Coverage</h3>
+                <h3>Planned Production Deployment</h3>
                 <ul class="country-list">
                     <li>
                         <span class="flag">🇬🇭</span>
-                        <div><strong>Ghana (Primary Host)</strong>KNUST, CAIH · VPN-secured server host</div>
+                        <div><strong>Ghana (Primary Host - Planned)</strong>KNUST, CAIH · VPN-secured server host</div>
                     </li>
                     <li>
                         <span class="flag">🇸🇱</span>
-                        <div><strong>Sierra Leone</strong>VPN-connected field teams</div>
+                        <div><strong>Sierra Leone (Planned)</strong>VPN-connected field teams</div>
                     </li>
                     <li>
                         <span class="flag">🇹🇿</span>
-                        <div><strong>Tanzania</strong>VPN-connected field teams</div>
+                        <div><strong>Tanzania (Planned)</strong>VPN-connected field teams</div>
                     </li>
                 </ul>
+                <span style="display:block;margin-top:10px;font-size:0.75rem;color:var(--text-3);line-height:1.45;">*Note: This deployment structure represents the target production state; it is not currently in place.</span>
             </div>
         </div>
     </section>
@@ -507,7 +508,7 @@
                     <li><i class="ic ic-done">✅</i> CI/CD pipeline across all 6 repos</li>
                     <li><i class="ic ic-done">✅</i> Grafana auto-provisioned dashboards + Loki log aggregation</li>
                     <li><i class="ic ic-wip">⚠️</i> Production TLS certificate pending (self-signed for dev only)</li>
-                    <li><i class="ic ic-todo">○</i> Alertmanager Discord/Slack webhook (config ready, not yet set)</li>
+                    <li><i class="ic ic-done">✅</i> Discord Alertmanager webhook configured and active, receiving alerts</li>
                     <li><i class="ic ic-todo">○</i> PITR restore drill not yet formally documented</li>
                 </ul>
                 <div class="repo-footer">
@@ -668,6 +669,7 @@
                     <li>Backend Alembic DB schema deployed and queryable</li>
                     <li>Admin dashboard fetching real data from the backend API</li>
                     <li>CI/CD across all 6 repos: automated test → build → image push</li>
+                    <li>Discord Alertmanager webhook configured and active, receiving alerts</li>
                 </ul>
             </div>
             <div class="hl-card">
@@ -677,7 +679,6 @@
                     <li>Safeguarding escalation route not yet implemented in backend</li>
                     <li>PI, Country Lead, and Enumerator dashboards are "coming soon" stubs</li>
                     <li>Production TLS certificate pending (KNUST IT procurement)</li>
-                    <li>Alertmanager webhook URL (Discord/Slack) not yet configured</li>
                     <li>PITR restore drill not formally documented or tested end-to-end</li>
                     <li>2FA enforcement in NextAuth not yet configured</li>
                     <li>Actual documentation drafts not yet written (neps-docs)</li>
@@ -717,12 +718,6 @@
                         <td>Build PI, Country Lead, and Enumerator role dashboards in the portal</td>
                         <td><span class="prio prio-high">🟠 High</span></td>
                         <td><span class="owner-chip">Portal Team</span></td>
-                    </tr>
-                    <tr>
-                        <td>Phase 2 — Safeguarding</td>
-                        <td>Configure Alertmanager Discord/Slack webhook for SafeguardingCrisisAlert</td>
-                        <td><span class="prio prio-high">🟠 High</span></td>
-                        <td><span class="owner-chip">Damien</span></td>
                     </tr>
                     <tr>
                         <td>Phase 2 — Safeguarding</td>
@@ -839,7 +834,7 @@
 <!-- Footer -->
 <footer>
     <div style="max-width:1100px;margin:0 auto;padding:0 24px;">
-        <p>For more information, contact <strong>Prof. Obed</strong> or <strong>Dr. Linda</strong> at the <strong>Centre for Addiction and Information Health (CAIH), KNUST, Ghana</strong>.</p>
+        <p>For more info contact <strong>Prof. Obed Brew</strong> or <strong>Dr. Linda Banning</strong> at the <strong>Centre for Artificial Intelligence in Health (CAIH), KNUST, Ghana</strong>.</p>
     </div>
 </footer>
 
