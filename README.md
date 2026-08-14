@@ -1,6 +1,6 @@
 # NEPS Public Site
 
-Public-facing project page for the NEPS Digital System — a youth mental health research platform operating across Ghana, Sierra Leone, and Tanzania.
+Public-facing project page for the NEPS Digital System — a youth mental health research platform planned for deployment across Ghana, Sierra Leone, and Tanzania.
 
 ## Purpose
 
@@ -32,7 +32,7 @@ To update the site:
 - Team member personal contact details
 - Links to private repositories
 - REDCap tokens or database credentials
-- Commit counts or fabricated metrics
+- Commit counts or progress percentages
 
 ## Structure
 
@@ -48,4 +48,4 @@ To update the site:
 - This is a **public** repository. Do not commit sensitive information.
 - The site is intentionally single-file and self-contained to minimize maintenance.
 - All styling is inline to avoid external CSS dependencies.
-- Progress indicators use qualitative labels ("Foundation Laid", "Architecture Ready") rather than precise percentages to avoid unverifiable claims.
+- Status indicators use qualitative labels (such as "Active Dev", "Partial Dev", "Drafting") rather than precise percentages or commit counts to avoid unverifiable claims.
