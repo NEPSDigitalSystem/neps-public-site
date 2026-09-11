@@ -338,7 +338,7 @@
 <div class="meta-bar">
     <div class="meta-bar-inner">
         <span>Organisation: <strong>NEPSDigitalSystem</strong> &nbsp;·&nbsp; Public Read-Only Status Report</span>
-        <span>Report date: <strong>August 2026</strong></span>
+        <span>Report date: <strong>August 2026</strong> · Factual corrections applied <strong>September 10, 2026</strong></span>
     </div>
 </div>
 
@@ -531,9 +531,9 @@
                     <li><i class="ic ic-done">✅</i> REDCap mock client (REDCAP_MOCK_ENABLED toggle)</li>
                     <li><i class="ic ic-done">✅</i> APScheduler for hourly REDCap sync jobs</li>
                     <li><i class="ic ic-done">✅</i> Prometheus instrumentation (/metrics) + health check (/health)</li>
-                    <li><i class="ic ic-wip">⚠️</i> JWT authentication middleware wired but not fully tested end-to-end</li>
+                    <li><i class="ic ic-wip">⚠️</i> JWT helper scaffolding exists in security.py (token creation + decode functions); no /api/auth/login endpoint; no User model; zero routes protected with auth guards</li>
                     <li><i class="ic ic-todo">○</i> Safeguarding escalation endpoint (internal routing) not yet built</li>
-                    <li><i class="ic ic-todo">○</i> Risk model router scaffolded — not yet implemented</li>
+                    <li><i class="ic ic-todo">○</i> Risk model router file exists but is empty (risk_models.py is 0 bytes)</li>
                 </ul>
                 <div class="repo-footer">
                     <div class="repo-meta-row"><span class="lbl">Lead Developer</span><span class="val">Samuel</span></div>
@@ -574,8 +574,9 @@
                 <ul class="check-list">
                     <li><i class="ic ic-done">✅</i> Landing page with animated typewriter + dark/light theme toggle</li>
                     <li><i class="ic ic-done">✅</i> NextAuth v5 with role-based routing middleware</li>
-                    <li><i class="ic ic-done">✅</i> Admin dashboard with live stats, alerts, and distress trends from backend</li>
-                    <li><i class="ic ic-done">✅</i> StatCard, AlertCard, StressScoreTrend, DataCollectionStatus, WorkPackageOverview, RecentActivity, Demographics components</li>
+                    <li><i class="ic ic-done">✅</i> Admin dashboard with 3 components live-bound to backend API (StatCard stats, StressScoreTrend, AlertCard alerts) with graceful fallback to dummy data</li>
+                    <li><i class="ic ic-wip">⚠️</i> 6 remaining admin dashboard components (ParticipantTrendChart, DataCollectionStatus, WorkPackageOverview, UpcomingSchedule, RecentActivity, Demographics) still use hardcoded/static values</li>
+                    <li><i class="ic ic-done">✅</i> Full set of dashboard card components built and styled</li>
                     <li><i class="ic ic-done">✅</i> Prometheus /api/metrics endpoint</li>
                     <li><i class="ic ic-done">✅</i> Fully typed API client against backend response models</li>
                     <li><i class="ic ic-wip">⚠️</i> PI, Country Lead, Enumerator dashboards scaffolded — "coming soon" stubs</li>
@@ -660,28 +661,30 @@
                 <h3><span class="dot dot-green"></span>What is Operational</h3>
                 <ul class="hl-list">
                     <li>Full infrastructure stack running in Docker (17 containers)</li>
-                    <li>PostgreSQL with WAL archiving and nightly PITR base backups</li>
+                    <li>PostgreSQL with WAL archiving and nightly PITR base backups via Ofelia cron (02:00)</li>
                     <li>Prometheus scraping all 4 application services</li>
-                    <li>Grafana dashboard auto-provisioned with live metric graphs</li>
+                    <li>Grafana dashboard auto-provisioned with live metric graphs (1 overview dashboard)</li>
                     <li>Loki + Promtail collecting logs from all containers</li>
                     <li>REDCap mock API live on Render — all teams using it for dev</li>
-                    <li>Data platform ETL successfully running nightly sync (mock data)</li>
+                    <li>Data platform ETL nightly sync configured via Ofelia docker-exec (01:00 daily, full refresh); container sleeps after migrate, sync triggered externally</li>
                     <li>Backend Alembic DB schema deployed and queryable</li>
-                    <li>Admin dashboard fetching real data from the backend API</li>
-                    <li>CI/CD across all 6 repos: automated test → build → image push</li>
-                    <li>Discord Alertmanager webhook configured and active, receiving alerts</li>
+                    <li>Admin dashboard: 3 components (StatCard stats, StressScoreTrend, AlertCard) fetching live backend data with fallback; 6+ components still hardcoded</li>
+                    <li>CI/CD across all 6 repos: automated test → build → image push (deploy job activates once DEPLOY_HOST GitHub var is set)</li>
+                    <li>Alertmanager configured with real Discord webhook alongside webhook-logger test sink; safeguarding alerts deliver to Discord channel</li>
                 </ul>
             </div>
             <div class="hl-card">
                 <h3><span class="dot dot-amber"></span>Critical Pending Items</h3>
                 <ul class="hl-list">
-                    <li>ML/AI models not yet exposed through API endpoints</li>
-                    <li>Safeguarding escalation route not yet implemented in backend</li>
-                    <li>PI, Country Lead, and Enumerator dashboards are "coming soon" stubs</li>
-                    <li>Production TLS certificate pending (KNUST IT procurement)</li>
+                    <li>Backend: no /api/auth/login endpoint, no User DB model, zero routes protected with JWT auth guards (helpers scaffolded only; entire API publicly accessible)</li>
+                    <li>ML/AI models not yet exposed through API endpoints (only / and /health exist; trained PKL models not loaded)</li>
+                    <li>Safeguarding escalation route and case management workflow not yet implemented (no acknowledge/assign/resolve endpoints or UI)</li>
+                    <li>PI, Country Lead, and Enumerator dashboards are "coming soon" stubs (Admin dashboard partially live-bound)</li>
+                    <li>Production TLS certificate pending institutional procurement (self-signed certs exist for local dev)</li>
+                    <li>Data-platform: incremental sync feature branch not yet merged (current nightly is full refresh only; relies on external Ofelia docker-exec)</li>
                     <li>PITR restore drill not formally documented or tested end-to-end</li>
                     <li>2FA enforcement in NextAuth not yet configured</li>
-                    <li>Actual documentation drafts not yet written (neps-docs)</li>
+                    <li>Actual documentation drafts not yet written (neps-docs: plan + confidentiality register only)</li>
                 </ul>
             </div>
         </div>
