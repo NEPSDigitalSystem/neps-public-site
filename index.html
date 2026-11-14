@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEPS Digital System — Public Status Report | August 2026</title>
-    <meta name="description" content="Public status report for the NEPS Digital youth mental health surveillance platform. Covers development across Ghana, Sierra Leone, and Tanzania.">
+    <title>NEPS Digital System — Public Status Report | November 2026</title>
+    <meta name="description" content="Public status report for the NEPS Digital youth mental health surveillance platform across Ghana, Sierra Leone, and Tanzania. Reflects Baseline V3.1 Handover and REDCap Data Dictionary V3.2 integration.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
     <style>
         /* ── Design Tokens (light academic palette) ────────── */
@@ -78,7 +78,7 @@
         }
         .site-hero .hero-sub {
             color: var(--text-3); font-size: .97rem;
-            max-width: 520px; margin: 0 auto 28px; line-height: 1.65;
+            max-width: 640px; margin: 0 auto 28px; line-height: 1.65;
         }
         .hero-pills { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
         .hero-pill {
@@ -88,6 +88,8 @@
             font-size: .78rem; font-weight: 600; color: var(--text-2);
         }
         .hero-pill .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); }
+        .hero-pill .dot-blue { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); }
+        .hero-pill .dot-amber { width: 7px; height: 7px; border-radius: 50%; background: var(--amber); }
 
         /* ── Meta Bar ────────────────────────────────────── */
         .meta-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 10px 0; }
@@ -141,33 +143,54 @@
         .note-banner .ico { flex-shrink: 0; color: var(--blue); }
         .note-banner strong { color: var(--navy); }
 
-        /* ── Governance Blockers ─────────────────────────── */
-        .blockers-card {
-            background: #fffbeb; border: 1px solid #fde68a;
-            border-left: 4px solid var(--amber);
-            border-radius: var(--radius); padding: 22px 24px; margin-bottom: 52px;
+        /* ── Governance & Handover Card ─────────────────── */
+        .governance-card {
+            background: #ffffff; border: 1px solid var(--border);
+            border-radius: var(--radius); padding: 26px; margin-bottom: 52px;
+            box-shadow: 0 2px 10px rgba(15,23,42,.03);
         }
-        .blockers-card .bc-header {
-            display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
+        .gov-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 16px; flex-wrap: wrap; gap: 10px;
         }
-        .blockers-card .bc-header h3 {
-            font-size: 1rem; font-weight: 700; color: var(--amber-dark);
-            text-decoration: underline; text-underline-offset: 3px;
+        .gov-header h3 {
+            font-size: 1.05rem; font-weight: 700; color: var(--navy);
+            display: flex; align-items: center; gap: 8px;
         }
-        .blockers-card .bc-intro {
-            font-size: .88rem; color: var(--text-2); line-height: 1.65; margin-bottom: 16px;
+        .gov-sub {
+            font-size: .88rem; color: var(--text-2); line-height: 1.65; margin-bottom: 20px;
         }
-        .blockers-card .bc-intro strong { color: var(--amber-dark); font-weight: 700; }
-        .blocker-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-        .blocker-list li {
-            font-size: .875rem; color: var(--text-2); line-height: 1.55;
-            display: flex; align-items: flex-start; gap: 9px;
+        .gov-grid {
+            display: grid; grid-template-columns: 1fr; gap: 18px;
         }
-        .blocker-list li .bl-dot {
-            width: 8px; height: 8px; border-radius: 50%; background: var(--amber);
-            flex-shrink: 0; margin-top: 5px;
+        @media (min-width: 768px) { .gov-grid { grid-template-columns: 1fr 1fr; } }
+
+        .gov-box {
+            border-radius: var(--radius-sm); padding: 18px 20px;
         }
-        .blocker-list li strong { color: var(--amber-dark); font-weight: 700; }
+        .gov-box-resolved {
+            background: #f0fdf4; border: 1px solid #bbf7d0; border-left: 4px solid var(--green);
+        }
+        .gov-box-pending {
+            background: #fffbeb; border: 1px solid #fde68a; border-left: 4px solid var(--amber);
+        }
+        .gov-box h4 {
+            font-size: .86rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+            margin-bottom: 12px; display: flex; align-items: center; gap: 8px;
+        }
+        .gov-box-resolved h4 { color: #166534; }
+        .gov-box-pending h4 { color: var(--amber-dark); }
+        
+        .gov-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .gov-list li {
+            font-size: .82rem; color: var(--text-2); line-height: 1.5;
+            display: flex; align-items: flex-start; gap: 8px;
+        }
+        .gov-list li .dot-item {
+            width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+        }
+        .dot-res { background: var(--green); }
+        .dot-pen { background: var(--amber); }
 
         /* ── Context Grid ────────────────────────────────── */
         .context-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 52px; }
@@ -181,6 +204,12 @@
         .ctx-card p  { color: var(--text-2); font-size: .9rem; line-height: 1.7; margin-bottom: 10px; }
         .ctx-card p:last-child { margin-bottom: 0; }
         .ctx-card strong { color: var(--navy-mid); font-weight: 600; }
+
+        .scale-badge-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+        .scale-badge {
+            background: var(--surface-2); border: 1px solid var(--border);
+            border-radius: 4px; padding: 2px 7px; font-size: .75rem; font-weight: 600; color: var(--navy-mid);
+        }
 
         .country-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
         .country-list li {
@@ -200,7 +229,7 @@
         .arch-card h3 { font-size: .95rem; font-weight: 700; color: var(--navy); margin-bottom: 18px; }
         .arch-flow { display: flex; align-items: stretch; overflow-x: auto; gap: 0; padding-bottom: 4px; }
         .arch-node {
-            flex: 1; min-width: 110px;
+            flex: 1; min-width: 125px;
             background: var(--surface-2); border: 1px solid var(--border);
             border-radius: var(--radius-sm); padding: 12px 10px;
             text-align: center; display: flex; flex-direction: column; gap: 5px; align-items: center;
@@ -228,6 +257,7 @@
         .repo-card.c-blue:hover  { border-left-color: var(--blue); }
         .repo-card.c-amber:hover { border-left-color: var(--amber); }
         .repo-card.c-navy:hover  { border-left-color: var(--navy-mid); }
+        .repo-card.c-green:hover { border-left-color: var(--green); }
 
         .repo-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 8px; }
         .repo-name { font-size: .97rem; font-weight: 700; color: var(--navy); letter-spacing: -.01em; word-break: break-word; }
@@ -303,6 +333,7 @@
         .prio-crit { background: var(--red-light);   color: var(--red);   border: 1px solid #fecaca; }
         .prio-high { background: var(--amber-light);  color: var(--amber); border: 1px solid #fde68a; }
         .prio-med  { background: var(--blue-light);   color: var(--blue);  border: 1px solid #bfdbfe; }
+        .prio-done { background: var(--green-light);  color: var(--green); border: 1px solid #a7f3d0; }
 
         .owner-chip {
             display: inline-block; background: var(--surface-2); border: 1px solid var(--border);
@@ -325,12 +356,13 @@
     <div class="org-tag">NEPSDigitalSystem &nbsp;·&nbsp; Public Report</div>
     <h1>NEPS Digital System</h1>
     <p class="hero-sub">
-        Public-facing status report for the <strong style="color:var(--navy-mid)">Navigating Educational Pressures and Stressors (NEPS)</strong> digital platform — a multi-country youth mental health research initiative.
+        Public status and technical progress report for the <strong style="color:var(--navy-mid)">Navigating Educational Pressures and Stressors (NEPS)</strong> digital platform — an adolescent and youth mental health research initiative.
     </p>
     <div class="hero-pills">
-        <span class="hero-pill"><span class="dot"></span> Multi-Site Research</span>
-        <span class="hero-pill">REDCap Integrated</span>
-        <span class="hero-pill">AI-Ready Infrastructure</span>
+        <span class="hero-pill"><span class="dot"></span> Multi-Site Research (GH · SL · TZ)</span>
+        <span class="hero-pill"><span class="dot-blue"></span> Track A Baseline Delivered</span>
+        <span class="hero-pill">REDCap Master CRF V3.2 (227 Fields)</span>
+        <span class="hero-pill"><span class="dot-amber"></span> Track B Longitudinal in Design</span>
     </div>
 </header>
 
@@ -338,33 +370,33 @@
 <div class="meta-bar">
     <div class="meta-bar-inner">
         <span>Organisation: <strong>NEPSDigitalSystem</strong> &nbsp;·&nbsp; Public Read-Only Status Report</span>
-        <span>Report date: <strong>August 2026</strong> · Factual corrections applied <strong>September 10, 2026</strong></span>
+        <span>Report date: <strong>November 2026</strong> · Post-Handover Baseline V3.1 &amp; REDCap V3.2 Integration</span>
     </div>
 </div>
 
 <main class="page">
 
-    <!-- KPI Strip (no percentages or commit counts) -->
+    <!-- KPI Strip -->
     <div class="kpi-strip">
         <div class="kpi-card">
             <span class="kpi-number" style="color:var(--blue)">6</span>
-            <span class="kpi-label">Core Repositories</span>
-        </div>
-        <div class="kpi-card">
-            <span class="kpi-number" style="color:var(--teal)">6</span>
-            <span class="kpi-label">CI/CD Pipelines</span>
+            <span class="kpi-label">Core Repositories (+1 Mock Utility)</span>
         </div>
         <div class="kpi-card">
             <span class="kpi-number" style="color:var(--navy-mid)">3</span>
-            <span class="kpi-label">Study Countries</span>
+            <span class="kpi-label">Study Countries (GH · SL · TZ)</span>
         </div>
         <div class="kpi-card">
-            <span class="kpi-number" style="color:var(--amber)">24 mo</span>
-            <span class="kpi-label">Study Duration</span>
+            <span class="kpi-number" style="color:var(--teal)">227</span>
+            <span class="kpi-label">CRF Variables (73 Core Clinical)</span>
         </div>
         <div class="kpi-card">
-            <span class="kpi-number" style="color:var(--green)" style="font-size:1.2rem">Phase 1</span>
-            <span class="kpi-label">Current Phase</span>
+            <span class="kpi-number" style="color:var(--green)">150</span>
+            <span class="kpi-label">Scored Cohort (Golden Parity)</span>
+        </div>
+        <div class="kpi-card">
+            <span class="kpi-number" style="color:var(--amber)" style="font-size:1.15rem">Track A</span>
+            <span class="kpi-label">Status: Baseline Live · Track B Blocked</span>
         </div>
     </div>
 
@@ -372,37 +404,71 @@
     <div class="note-banner">
         <span class="ico">🔒</span>
         <span>
-            <strong>Privacy &amp; Security Note:</strong> Core repository source code, database migration schemas, patient questionnaire forms, and server configuration secrets are maintained in a <strong>private GitHub organisation</strong> to comply with GDPR and local data protection regulations in Ghana, Sierra Leone, and Tanzania. This page is a read-only public status mirror for institutional partners and coordinators.
+            <strong>Privacy &amp; Security Note:</strong> Core repository source code, database migration schemas, participant clinical entries, and infrastructure secrets are maintained inside a <strong>private GitHub organisation</strong> in accordance with GDPR and national data protection regulations across Ghana, Sierra Leone, and Tanzania. This page provides a transparent, read-only status mirror for institutional partners, funders, and research ethics committees.
         </span>
     </div>
 
-    <!-- Current Dependencies & Governance Blockers -->
-    <div class="blockers-card">
-        <div class="bc-header">
-            <span style="font-size:1.3rem">⏳</span>
-            <h3>Current Dependencies &amp; Governance Blockers</h3>
+    <!-- Governance & Dependencies Evolution Card -->
+    <div class="governance-card">
+        <div class="gov-header">
+            <h3><span>📋</span> Governance Milestones &amp; Dependency Evolution (Aug → Nov 2026)</h3>
+            <span class="status-pill pill-blue">Track A Verified · Track B Pending</span>
         </div>
-        <p class="bc-intro">
-            The project is following a <strong>requirements-first methodology</strong> to prevent costly rework. Several features are intentionally paused pending clinical and administrative approvals. These are not delays — they are evidence of disciplined governance.
+        <p class="gov-sub">
+            The NEPS Digital platform operates under a strict <strong>clinical requirements-first governance model</strong>. Following early technical blockers in August, the project received the official <strong>NDS_Team Handover Baseline V3.1 package</strong> from the NEPS Board in October, followed by the <strong>REDCap Data Dictionary Version 3.2</strong> in November. Here is the operational reality of what has been delivered versus what is pending external clinical sign-off:
         </p>
-        <ul class="blocker-list">
-            <li>
-                <span class="bl-dot"></span>
-                <span><strong>Case Report Forms (CRFs)</strong> pending finalisation by Prof. Obed Brew before REDCap API credentials are issued by KCIRD</span>
-            </li>
-            <li>
-                <span class="bl-dot"></span>
-                <span><strong>User stories and wireframes</strong> documentation pending release by the project coordinators before frontend development proceeds</span>
-            </li>
-            <li>
-                <span class="bl-dot"></span>
-                <span><strong>Live REDCap data</strong> unavailable until participant recruitment begins; synthetic data environment in active use</span>
-            </li>
-            <li>
-                <span class="bl-dot"></span>
-                <span><strong>Production TLS certificate</strong> pending institutional procurement from KNUST IT</span>
-            </li>
-        </ul>
+        
+        <div class="gov-grid">
+            <!-- Delivered / Unblocked -->
+            <div class="gov-box gov-box-resolved">
+                <h4><span>✅</span> Unblocked &amp; Implemented (Track A Scope)</h4>
+                <ul class="gov-list">
+                    <li>
+                        <span class="dot-item dot-res"></span>
+                        <span><strong>Master CRF V3.1 Handover Delivered:</strong> Board provided the official 223-row CRF dictionary, 73 core clinical items, and verified scoring contracts (K6, BRS, MSPSS, GSE, EPI, ESI, SBI, PFI, NSES).</span>
+                    </li>
+                    <li>
+                        <span class="dot-item dot-res"></span>
+                        <span><strong>REDCap Data Dictionary V3.2 Integrated:</strong> Bernard Arhin (KATH) issued V3.2 expanding to 227 fields; automated DOB-to-age calculation, explicit consent gating (<code class="mono">survey_consent</code>), and age-eligibility validation (12–24 years) are live across all tiers.</span>
+                    </li>
+                    <li>
+                        <span class="dot-item dot-res"></span>
+                        <span><strong>Unified User Stories Published:</strong> <code class="mono">USER_STORIES_V31.md</code> delivered with explicit qualitative acceptance criteria, role matrix, and integration boundaries.</span>
+                    </li>
+                    <li>
+                        <span class="dot-item dot-res"></span>
+                        <span><strong>Hardened JWT Authentication &amp; RBAC:</strong> Dedicated <code class="mono">/api/auth/login</code> endpoint deployed with country-level scoping (Ghana, Sierra Leone, Tanzania) and role enforcement across portal dashboards.</span>
+                    </li>
+                    <li>
+                        <span class="dot-item dot-res"></span>
+                        <span><strong>PITR Runbook Formally Documented:</strong> Automated WAL archiving and complete recovery procedures verified in <code class="mono">neps-infrastructure/docs/pitr-runbook.md</code>.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Active Dependencies / Blockers -->
+            <div class="gov-box gov-box-pending">
+                <h4><span>⏳</span> Active Blockers (Track B &amp; External Governance)</h4>
+                <ul class="gov-list">
+                    <li>
+                        <span class="dot-item dot-pen"></span>
+                        <span><strong>Track B Longitudinal CRFs Pending:</strong> Clinical team (Prof. Brew / KATH) has not yet finalized Case Report Forms for 24-month monthly self-reports (M1–M24, 14 parameters) and wave reviews (M06, M12, M18, M24). These remain classified as <code class="mono">UNVERIFIED</code>.</span>
+                    </li>
+                    <li>
+                        <span class="dot-item dot-pen"></span>
+                        <span><strong>Live REDCap Production Credentials:</strong> KATH/KCHR (<code class="mono">https://kchr.org</code>) API token issuance is deferred by the field committee until field participant recruitment begins. Development proceeds against the V3.2 mock server.</span>
+                    </li>
+                    <li>
+                        <span class="dot-item dot-pen"></span>
+                        <span><strong>Clinical Safeguarding Escalation Protocols:</strong> Exact referral pathways, emergency contacts, and clinician assignment workflows for severe distress (<code class="mono">K6 &ge; 13</code>) and suicidality require final ethics committee sign-off.</span>
+                    </li>
+                    <li>
+                        <span class="dot-item dot-pen"></span>
+                        <span><strong>Production TLS Certificate:</strong> On-premises host deployment at KNUST IT awaits institutional SSL certificate procurement.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
 
     <!-- Study Context -->
@@ -410,81 +476,92 @@
         <h2 class="section-heading"><span class="section-tag">Context</span> About the NEPS Study</h2>
         <div class="context-grid">
             <div class="ctx-card">
-                <h3>What is NEPS Digital?</h3>
+                <h3>Clinical Scope &amp; Target Population</h3>
                 <p>
-                    NEPS (<strong>Navigating Educational Pressures and Stressors</strong>) is a clinical-grade digital health surveillance platform monitoring the mental health and psychological resilience of youth aged <strong>10–24</strong> across three African countries over a <strong>24-month longitudinal study</strong>.
+                    NEPS (<strong>Navigating Educational Pressures and Stressors</strong>) is a clinical-grade digital mental health surveillance platform designed to evaluate and strengthen psychological resilience among adolescents and youth aged <strong>12–24 years</strong> across West and East Africa over a <strong>24-month longitudinal cohort study</strong>.
                 </p>
                 <p>
-                    The platform integrates <strong>REDCap</strong> for structured psychosocial data collection, an <strong>AI/ML distress engine</strong> for real-time risk scoring (PHQ-9, GAD-7, suicidality screening), and role-based clinical dashboards for Investigators, Country Leads, Enumerators, and System Administrators.
+                    Under the Master CRF V3.1/V3.2 standard, the platform computes <strong>9 authoritative psychometric indices</strong> to stratify risk and resilience:
                 </p>
+                <div class="scale-badge-list">
+                    <span class="scale-badge">K6 / MHDI (Mental Health Distress)</span>
+                    <span class="scale-badge">BRS (Brief Resilience)</span>
+                    <span class="scale-badge">MSPSS (Social Support)</span>
+                    <span class="scale-badge">GSE (Self-Efficacy)</span>
+                    <span class="scale-badge">EPI (Educational Pressure)</span>
+                    <span class="scale-badge">ESI (Economic Stress)</span>
+                    <span class="scale-badge">SBI (Stigma Burden)</span>
+                    <span class="scale-badge">PFI (Protective Factors)</span>
+                    <span class="scale-badge">NSES Composite Score</span>
+                </div>
                 <p>
-                    Infrastructure is planned to be hosted <strong>on-premises at KNUST/CAIH, Ghana</strong>, with VPN-secured access for field teams in Sierra Leone and Tanzania once the system is production-ready. Currently, this multi-country deployment is not yet in place.
+                    The platform combines <strong>REDCap</strong> survey capture with a high-throughput <strong>ETL scoring warehouse</strong>, a secure <strong>FastAPI backend</strong>, <strong>machine learning risk engines</strong>, and role-scoped Next.js clinical dashboards.
                 </p>
             </div>
             <div class="ctx-card">
-                <h3>Planned Production Deployment</h3>
+                <h3>Multi-Site Study Deployment</h3>
                 <ul class="country-list">
                     <li>
                         <span class="flag">🇬🇭</span>
-                        <div><strong>Ghana (Primary Host - Planned)</strong>KNUST, CAIH · VPN-secured server host</div>
+                        <div><strong>Ghana (Primary Host &amp; Lead Site)</strong>KNUST, CAIH · Kumasi &amp; Accra study sites (60 target cohort)</div>
                     </li>
                     <li>
                         <span class="flag">🇸🇱</span>
-                        <div><strong>Sierra Leone (Planned)</strong>VPN-connected field teams</div>
+                        <div><strong>Sierra Leone</strong>Freetown urban &amp; peri-urban study sites (45 target cohort)</div>
                     </li>
                     <li>
                         <span class="flag">🇹🇿</span>
-                        <div><strong>Tanzania (Planned)</strong>VPN-connected field teams</div>
+                        <div><strong>Tanzania</strong>Dar es Salaam study sites (45 target cohort)</div>
                     </li>
                 </ul>
-                <span style="display:block;margin-top:10px;font-size:0.75rem;color:var(--text-3);line-height:1.45;">*Note: This deployment structure represents the target production state; it is not currently in place.</span>
+                <span style="display:block;margin-top:10px;font-size:0.75rem;color:var(--text-3);line-height:1.45;">*Note: Target baseline verification cohort is 150 participants across all 3 countries, successfully modeled and scored in PostgreSQL.</span>
             </div>
         </div>
     </section>
 
-    <!-- Architecture -->
+    <!-- Architecture Flow -->
     <section class="mb-section">
-        <h2 class="section-heading"><span class="section-tag">Architecture</span> System Overview</h2>
+        <h2 class="section-heading"><span class="section-tag">Architecture</span> System Overview &amp; Data Pipeline</h2>
         <div class="arch-card">
-            <h3>Data &amp; Service Flow</h3>
+            <h3>End-to-End Clinical Data Pipeline</h3>
             <div class="arch-flow">
                 <div class="arch-node">
                     <span class="node-icon">📋</span>
                     <span class="node-name">REDCap / Mock</span>
-                    <span class="node-tech">Survey data<br>source of truth</span>
+                    <span class="node-tech">CRF V3.2 (227 vars)<br>Consent &amp; DOB Gated</span>
                 </div>
                 <div class="arch-arrow">→</div>
                 <div class="arch-node">
                     <span class="node-icon">🔄</span>
                     <span class="node-name">Data Platform</span>
-                    <span class="node-tech">ETL pipelines<br>PostgreSQL sync</span>
+                    <span class="node-tech">ETL Ingest &amp; Scoring<br>PostgreSQL Warehouse</span>
                 </div>
                 <div class="arch-arrow">→</div>
                 <div class="arch-node">
                     <span class="node-icon">⚙️</span>
                     <span class="node-name">Backend API</span>
-                    <span class="node-tech">FastAPI<br>Business logic</span>
+                    <span class="node-tech">FastAPI · JWT RBAC<br>Country-Scoped Routing</span>
                 </div>
                 <div class="arch-arrow">→</div>
                 <div class="arch-node">
                     <span class="node-icon">🤖</span>
                     <span class="node-name">ML / AI Engine</span>
-                    <span class="node-tech">Risk scoring<br>NLP sentiment</span>
+                    <span class="node-tech">240-Feature Models<br>NLP Clinical Triage</span>
                 </div>
                 <div class="arch-arrow">→</div>
                 <div class="arch-node">
                     <span class="node-icon">🖥️</span>
-                    <span class="node-name">Portal</span>
-                    <span class="node-tech">Next.js<br>Role dashboards</span>
+                    <span class="node-name">Portal Dashboards</span>
+                    <span class="node-tech">Next.js 16 · NextAuth<br>Admin, PI, Leads, Enums</span>
                 </div>
                 <div class="arch-arrow">→</div>
                 <div class="arch-node">
                     <span class="node-icon">👥</span>
-                    <span class="node-name">Clinical Staff</span>
-                    <span class="node-tech">PI · Leads<br>Enumerators</span>
+                    <span class="node-name">Clinical Researchers</span>
+                    <span class="node-tech">Triage · Analytics<br>Interventions (WP6)</span>
                 </div>
             </div>
-            <p class="arch-note">All services run inside Docker Compose on-premises at KNUST. Prometheus + Grafana provide observability. Alertmanager dispatches safeguarding crisis notifications. Ofelia schedules nightly backups and REDCap ETL sync.</p>
+            <p class="arch-note">All services run inside segmented Docker networks on-premises at KNUST. Prometheus, Grafana, and Loki provide full-stack telemetry. Alertmanager dispatches safeguarding notifications to Discord. Automated WAL archiving ensures point-in-time recovery (PITR).</p>
         </div>
     </section>
 
@@ -497,23 +574,22 @@
             <div class="repo-card c-teal">
                 <div class="repo-top">
                     <span class="repo-name">neps-infrastructure</span>
-                    <span class="status-pill pill-teal">Active Dev</span>
+                    <span class="status-pill pill-teal">Live / Active Ops</span>
                 </div>
-                <p class="repo-desc">DevOps orchestration hub. Manages the full Docker Compose stack, network segmentation, secrets management, monitoring telemetry, nightly backups, and CI/CD pipelines.</p>
+                <p class="repo-desc">DevOps and orchestration engine. Manages the 17-container Docker Compose stack, network isolation, credential vaulting, telemetry, continuous integration, and disaster recovery.</p>
                 <ul class="check-list">
-                    <li><i class="ic ic-done">✅</i> Full Docker Compose stack (17 services — Nginx, Prometheus, Grafana, Loki, Alertmanager, MinIO, Ofelia)</li>
-                    <li><i class="ic ic-done">✅</i> 4-tier network segmentation (public / internal / database / monitoring)</li>
-                    <li><i class="ic ic-done">✅</i> Docker Secrets for all credentials — no plain-text env vars</li>
-                    <li><i class="ic ic-done">✅</i> WAL archiving + PITR scripts (Ofelia cron nightly at 02:00)</li>
-                    <li><i class="ic ic-done">✅</i> CI/CD pipeline across all 6 repos</li>
-                    <li><i class="ic ic-done">✅</i> Grafana auto-provisioned dashboards + Loki log aggregation</li>
-                    <li><i class="ic ic-wip">⚠️</i> Production TLS certificate pending (self-signed for dev only)</li>
-                    <li><i class="ic ic-done">✅</i> Discord Alertmanager webhook configured and active, receiving alerts</li>
-                    <li><i class="ic ic-todo">○</i> PITR restore drill not yet formally documented</li>
+                    <li><i class="ic ic-done">✅</i> 17 container services running in Docker Compose with 4-tier network isolation</li>
+                    <li><i class="ic ic-done">✅</i> Docker Secrets for all credentials — zero plain-text passwords or tokens</li>
+                    <li><i class="ic ic-done">✅</i> WAL archiving and nightly PITR backup script via Ofelia cron (02:00)</li>
+                    <li><i class="ic ic-done">✅</i> Formal PITR operational runbook published (<code class="mono">docs/pitr-runbook.md</code>)</li>
+                    <li><i class="ic ic-done">✅</i> Active CI/CD pipelines across all repositories (main &amp; staging)</li>
+                    <li><i class="ic ic-done">✅</i> Prometheus, Grafana dashboards, and Loki log pipelines operational</li>
+                    <li><i class="ic ic-done">✅</i> Discord Alertmanager webhook active and routing safeguarding alerts</li>
+                    <li><i class="ic ic-wip">⚠️</i> Production TLS certificate pending institutional IT procurement from KNUST</li>
                 </ul>
                 <div class="repo-footer">
                     <div class="repo-meta-row"><span class="lbl">Lead DevOps</span><span class="val">Damien Nsoh Ayine</span></div>
-                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">August 2026</span></div>
+                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">November 2026</span></div>
                 </div>
             </div>
 
@@ -521,72 +597,65 @@
             <div class="repo-card c-blue">
                 <div class="repo-top">
                     <span class="repo-name">neps-backend</span>
-                    <span class="status-pill pill-blue">Active Dev</span>
+                    <span class="status-pill pill-blue">Live (Baseline) / Active Dev</span>
                 </div>
-                <p class="repo-desc">FastAPI-based REST API. Serves the portal and data platform. Handles REDCap data proxy, participant records, distress screenings, referrals, and WP6 interventions.</p>
+                <p class="repo-desc">FastAPI clinical REST service. Implements fail-closed JWT authentication, country data scoping, official V3.1/V3.2 baseline endpoints, scoring queries, and REDCap synchronization.</p>
                 <ul class="check-list">
-                    <li><i class="ic ic-done">✅</i> FastAPI app with full router structure (portal, redcap, sync, analytics, health)</li>
-                    <li><i class="ic ic-done">✅</i> SQLAlchemy ORM models: Participant, ConsentRecord, SurveyResponse, DistressScreening, WP6Session, Referral, LongitudinalRecord</li>
-                    <li><i class="ic ic-done">✅</i> Alembic migrations (initial schema + foreign key constraints)</li>
-                    <li><i class="ic ic-done">✅</i> REDCap mock client (REDCAP_MOCK_ENABLED toggle)</li>
-                    <li><i class="ic ic-done">✅</i> APScheduler for hourly REDCap sync jobs</li>
-                    <li><i class="ic ic-done">✅</i> Prometheus instrumentation (/metrics) + health check (/health)</li>
-                    <li><i class="ic ic-wip">⚠️</i> JWT helper scaffolding exists in security.py (token creation + decode functions); no /api/auth/login endpoint; no User model; zero routes protected with auth guards</li>
-                    <li><i class="ic ic-todo">○</i> Safeguarding escalation endpoint (internal routing) not yet built</li>
-                    <li><i class="ic ic-todo">○</i> Risk model router file exists but is empty (risk_models.py is 0 bytes)</li>
+                    <li><i class="ic ic-done">✅</i> Hardened JWT authentication (<code class="mono">POST /api/auth/login</code>) with role-based and country scoping</li>
+                    <li><i class="ic ic-done">✅</i> Live V3.1/V3.2 baseline endpoints: <code class="mono">/api/v31/baseline</code>, <code class="mono">/api/v31/participants</code>, <code class="mono">/api/v31/stats</code>, <code class="mono">/api/v31/export</code></li>
+                    <li><i class="ic ic-done">✅</i> Dynamic dictionary API (<code class="mono">/api/v31/dictionary</code>) serving 227 V3.2 fields with V3.1 fallback</li>
+                    <li><i class="ic ic-done">✅</i> Distress trend and trajectory endpoints (<code class="mono">/api/portal/distress/trends</code>)</li>
+                    <li><i class="ic ic-done">✅</i> 119/119 unit and integration tests passing in CI (100% green)</li>
+                    <li><i class="ic ic-done">✅</i> <code class="mono">POST /api/v31/baseline</code> returns HTTP 501 by design until direct REDCap enumerator sync (Track B) is finalized</li>
+                    <li><i class="ic ic-todo">○</i> Track B monthly self-report endpoints (M1–M24) pending clinical CRF handover</li>
                 </ul>
                 <div class="repo-footer">
                     <div class="repo-meta-row"><span class="lbl">Lead Developer</span><span class="val">Samuel</span></div>
-                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">August 2026</span></div>
+                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">November 2026</span></div>
                 </div>
             </div>
 
             <!-- neps-data-platform -->
-            <div class="repo-card c-blue">
+            <div class="repo-card c-green">
                 <div class="repo-top">
                     <span class="repo-name">neps-data-platform</span>
-                    <span class="status-pill pill-blue">Active Dev</span>
+                    <span class="status-pill pill-green">Live</span>
                 </div>
-                <p class="repo-desc">ETL warehouse pipeline. Extracts from REDCap (live or mock), transforms raw survey records, and upserts into PostgreSQL. Supports multi-instrument sync with schema migrations.</p>
+                <p class="repo-desc">ETL data platform and clinical scoring warehouse. Ingests raw REDCap survey records, validates schemas, executes psychometric scoring algorithms, and persists verified data in PostgreSQL.</p>
                 <ul class="check-list">
-                    <li><i class="ic ic-done">✅</i> Full ETL pipeline: extract → transform → load with CLI entrypoint</li>
-                    <li><i class="ic ic-done">✅</i> Upsert logic (ON CONFLICT) for idempotent REDCap data loads</li>
-                    <li><i class="ic ic-done">✅</i> Alembic database migrations (001_initial schema)</li>
-                    <li><i class="ic ic-done">✅</i> Sync orchestrator with --full, --metadata-only, --dry-run flags</li>
-                    <li><i class="ic ic-done">✅</i> Ofelia cron nightly sync (01:00 daily)</li>
-                    <li><i class="ic ic-done">✅</i> Distress trends analytics module (distress_trends.py)</li>
-                    <li><i class="ic ic-wip">⚠️</i> Error notification on sync failure not yet wired</li>
-                    <li><i class="ic ic-todo">○</i> Integration test suite needs expansion</li>
+                    <li><i class="ic ic-done">✅</i> Additive Alembic migration chain through <code class="mono">004_storage_integrity</code></li>
+                    <li><i class="ic ic-done">✅</i> Core 73 clinical psychometric scoring engine with 100% mathematical parity against <code class="mono">SCORING_GOLDEN.json</code></li>
+                    <li><i class="ic ic-done">✅</i> <code class="mono">ingest-v31</code> CLI ingests and scores all 150 baseline records into PostgreSQL (<code class="mono">nds_v31_source</code>, <code class="mono">nds_v31_derived</code>)</li>
+                    <li><i class="ic ic-done">✅</i> JSON payload warehouse schema seamlessly accommodates V3.2 consent and DOB fields</li>
+                    <li><i class="ic ic-done">✅</i> Orchestration CLI with <code class="mono">--full</code>, <code class="mono">--metadata-only</code>, and <code class="mono">--dry-run</code> modes</li>
+                    <li><i class="ic ic-done">✅</i> Distress trends analytics and quality metrics validation modules</li>
+                    <li><i class="ic ic-todo">○</i> Track B 24-month longitudinal table migrations pending monthly CRF release</li>
                 </ul>
                 <div class="repo-footer">
                     <div class="repo-meta-row"><span class="lbl">Lead Developers</span><span class="val">Frank / Isaac</span></div>
-                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">August 2026</span></div>
+                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">November 2026</span></div>
                 </div>
             </div>
 
             <!-- neps-portal -->
-            <div class="repo-card c-amber">
+            <div class="repo-card c-blue">
                 <div class="repo-top">
                     <span class="repo-name">neps-portal</span>
-                    <span class="status-pill pill-amber">Partial Dev</span>
+                    <span class="status-pill pill-blue">Active Dev</span>
                 </div>
-                <p class="repo-desc">Next.js 16 / React 19 clinical web portal. Role-based dashboards, live API data fetching, chart visualisations, authentication, and Prometheus metrics.</p>
+                <p class="repo-desc">Next.js 16 / React 19 clinical portal. Delivers role-based dashboards, country data filtering, longitudinal trend visualizations, OpenAPI mock backend, and clinical intake forms.</p>
                 <ul class="check-list">
-                    <li><i class="ic ic-done">✅</i> Landing page with animated typewriter + dark/light theme toggle</li>
-                    <li><i class="ic ic-done">✅</i> NextAuth v5 with role-based routing middleware</li>
-                    <li><i class="ic ic-done">✅</i> Admin dashboard with 3 components live-bound to backend API (StatCard stats, StressScoreTrend, AlertCard alerts) with graceful fallback to dummy data</li>
-                    <li><i class="ic ic-wip">⚠️</i> 6 remaining admin dashboard components (ParticipantTrendChart, DataCollectionStatus, WorkPackageOverview, UpcomingSchedule, RecentActivity, Demographics) still use hardcoded/static values</li>
-                    <li><i class="ic ic-done">✅</i> Full set of dashboard card components built and styled</li>
-                    <li><i class="ic ic-done">✅</i> Prometheus /api/metrics endpoint</li>
-                    <li><i class="ic ic-done">✅</i> Fully typed API client against backend response models</li>
-                    <li><i class="ic ic-wip">⚠️</i> PI, Country Lead, Enumerator dashboards scaffolded — "coming soon" stubs</li>
-                    <li><i class="ic ic-todo">○</i> Participants module route not yet built</li>
-                    <li><i class="ic ic-todo">○</i> Safeguarding alert detail page not yet built</li>
-                    <li><i class="ic ic-todo">○</i> 2FA enforcement not yet configured in NextAuth</li>
+                    <li><i class="ic ic-done">✅</i> V3.1/V3.2 consumption layer merged (PR #92, #104/#105) with fail-closed security</li>
+                    <li><i class="ic ic-done">✅</i> Built-in mock API server (<code class="mono">npm run mock</code>) and full OpenAPI 3.1 specification (<code class="mono">openapi.json</code>) simulating 150 participants across all 3 countries</li>
+                    <li><i class="ic ic-done">✅</i> Role-based and country-scoped dashboards for Admin, PI, Country Lead, and Enumerator</li>
+                    <li><i class="ic ic-done">✅</i> Baseline entry form (<code class="mono">US-FE-BL-001</code>) updated for V3.2 (explicit consent, DOB age calculation, 12–24 alert)</li>
+                    <li><i class="ic ic-done">✅</i> Dynamic participant directory with country filtering (Ghana, Sierra Leone, Tanzania)</li>
+                    <li><i class="ic ic-done">✅</i> Prometheus <code class="mono">/api/metrics</code> instrumentation and Next.js dark/light theme toggle</li>
+                    <li><i class="ic ic-wip">⚠️</i> 14-parameter monthly monitoring cards prototype wired to trend API; pending Track B CRFs</li>
                 </ul>
                 <div class="repo-footer">
                     <div class="repo-meta-row"><span class="lbl">Lead Developers</span><span class="val">Eric / Ama / Ghazi</span></div>
-                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">August 2026</span></div>
+                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">November 2026</span></div>
                 </div>
             </div>
 
@@ -594,45 +663,42 @@
             <div class="repo-card c-amber">
                 <div class="repo-top">
                     <span class="repo-name">neps-ml-ai</span>
-                    <span class="status-pill pill-amber">Partial Dev</span>
+                    <span class="status-pill pill-amber">Active Dev</span>
                 </div>
-                <p class="repo-desc">AI/ML analytics engine. Trained NLP classification models for emotion detection and sentiment scoring. REST API for predictions is in progress.</p>
+                <p class="repo-desc">Predictive analytics and clinical NLP engine. Houses machine learning pipelines for adolescent distress risk detection, sentiment evaluation, and clinical text classification.</p>
                 <ul class="check-list">
-                    <li><i class="ic ic-done">✅</i> FastAPI app with /health + /metrics endpoints</li>
-                    <li><i class="ic ic-done">✅</i> Emotion detection model trained (TF-IDF + Logistic Regression, 6 classes)</li>
-                    <li><i class="ic ic-done">✅</i> Sentiment classification pipeline trained and serialised (PKL)</li>
-                    <li><i class="ic ic-done">✅</i> NLP preprocessing module for text cleaning and vectorisation</li>
-                    <li><i class="ic ic-done">✅</i> PKL model/vectorizer/pipeline artefacts stored in models/</li>
-                    <li><i class="ic ic-wip">⚠️</i> Models not yet loaded into API — endpoints return placeholder only</li>
-                    <li><i class="ic ic-todo">○</i> PHQ-9 / GAD-7 structured risk scoring not yet built</li>
-                    <li><i class="ic ic-todo">○</i> Prediction endpoints not yet wired to backend risk_models router</li>
+                    <li><i class="ic ic-done">✅</i> PostgreSQL warehouse reader (<code class="mono">app/data/v31_repository.py</code>) reading directly from live database tables</li>
+                    <li><i class="ic ic-done">✅</i> Published verified offline 240-column baseline dataset (<code class="mono">v31_baseline_dataset.csv</code>) matching V3.2</li>
+                    <li><i class="ic ic-done">✅</i> Multimodal NLP clinical dataset with 2,000 records across 6 narrative modalities and 21 emotion labels</li>
+                    <li><i class="ic ic-done">✅</i> Serialized emotion classification and sentiment models in <code class="mono">models/</code></li>
+                    <li><i class="ic ic-done">✅</i> Fast-API microservice container with health check and Prometheus metrics</li>
+                    <li><i class="ic ic-wip">⚠️</i> Baseline scoring models currently train on verified V3.1 snapshot; live inference routing in review</li>
+                    <li><i class="ic ic-todo">○</i> Longitudinal trajectory risk forecaster dormant awaiting Track B monthly data</li>
                 </ul>
                 <div class="repo-footer">
                     <div class="repo-meta-row"><span class="lbl">Lead Developer</span><span class="val">Yasmine</span></div>
-                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">August 2026</span></div>
+                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">November 2026</span></div>
                 </div>
             </div>
 
             <!-- neps-docs -->
-            <div class="repo-card c-navy">
+            <div class="repo-card c-teal">
                 <div class="repo-top">
                     <span class="repo-name">neps-docs</span>
-                    <span class="status-pill pill-navy">Drafting</span>
+                    <span class="status-pill pill-teal">Active Dev</span>
                 </div>
-                <p class="repo-desc">Technical documentation and deployment guides covering data security, multi-country hosting, clinical data flows, dashboard UX, AI risk detection, REDCap forms, and backup procedures.</p>
+                <p class="repo-desc">Technical governance, deployment runbooks, and clinical operations documentation hub. Establishes data ethics, disaster recovery runbooks, and schema audit logs.</p>
                 <ul class="check-list">
-                    <li><i class="ic ic-done">✅</i> Documentation plan and structure in place (7 document areas defined)</li>
-                    <li><i class="ic ic-done">✅</i> Source teams and information requirements mapped per document</li>
-                    <li><i class="ic ic-wip">⚠️</i> Actual document drafts not yet written (plan only)</li>
-                    <li><i class="ic ic-todo">○</i> Data Security policy document pending</li>
-                    <li><i class="ic ic-todo">○</i> Three-Country Hosting architecture guide pending</li>
-                    <li><i class="ic ic-todo">○</i> REDCap integration and form management guide pending</li>
-                    <li><i class="ic ic-todo">○</i> Backup &amp; Disaster Recovery runbook pending</li>
-                    <li><i class="ic ic-todo">○</i> AI/ML risk detection explanation for clinicians pending</li>
+                    <li><i class="ic ic-done">✅</i> Comprehensive operational runbooks (<code class="mono">08-operational-runbook.md</code>)</li>
+                    <li><i class="ic ic-done">✅</i> Data Ethics and Management Plan (<code class="mono">07-ethics-data-management-plan.md</code>)</li>
+                    <li><i class="ic ic-done">✅</i> Pipeline testing and verification guide (<code class="mono">pipeline-testing-guide.md</code>)</li>
+                    <li><i class="ic ic-done">✅</i> Formally signed-off Confidentiality and Trade Secret Register</li>
+                    <li><i class="ic ic-done">✅</i> PostgreSQL database architecture review and dependency audit documents</li>
+                    <li><i class="ic ic-wip">⚠️</i> Multi-country deployment VPN guide to be finalized upon physical hardware install</li>
                 </ul>
                 <div class="repo-footer">
                     <div class="repo-meta-row"><span class="lbl">Lead Writer</span><span class="val">Salamatu</span></div>
-                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">July 2026</span></div>
+                    <div class="repo-meta-row"><span class="lbl">Last Activity</span><span class="val">November 2026</span></div>
                 </div>
             </div>
 
@@ -641,50 +707,46 @@
 
     <!-- External Utility -->
     <section class="mb-section">
-        <h2 class="section-heading"><span class="section-tag">External</span> Development Utilities</h2>
+        <h2 class="section-heading"><span class="section-tag">External Utility</span> Sandboxed REDCap API Service</h2>
         <div class="ext-card">
-            <h3>mock-redcap-service &nbsp;<span class="status-pill pill-green" style="font-size:.68rem;padding:2px 8px;">Live on Render</span></h3>
+            <h3>mock-redcap-service &nbsp;<span class="status-pill pill-green" style="font-size:.68rem;padding:2px 8px;">Live on Render · V3.2 Standard</span></h3>
             <p>
-                A standalone hosted mock REDCap API mirroring exact REDCap POST endpoint payload formats. Serves realistic longitudinal youth mental health data across all three study countries. All teams (backend, data-platform, portal) point to this service for development and integration testing while the live REDCap instance is being provisioned.
+                A high-fidelity standalone mock REDCap service hosted on Render that replicates exact REDCap API endpoints, authentication headers, and multi-country response payloads. Updated to the <strong>Version 3.2 data dictionary</strong>, it generates realistic synthetic participant profiles with automated DOB-to-age calculation, explicit consent gating, and stamps survey completion dates.
             </p>
             <p>
-                Includes a 2,000-record mock NLP dataset validated against the NEPS instrument schema. Exposes REDCap-style record export, metadata, and event-arm endpoints. Drop-in replaceable by switching a single <code style="background:rgba(0,0,0,.06);padding:1px 5px;border-radius:3px;font-size:.8rem;">REDCAP_API_URL</code> environment variable.
+                Exposes the full 150 participant baseline dataset across Ghana, Sierra Leone, and Tanzania, the 227-field data dictionary API, and the 2,000-record multimodal NLP dataset. All services point to this instance for end-to-end integration testing, providing a zero-friction drop-in replacement when the live KCHR REDCap production server (<code class="mono">https://kchr.org</code>) is connected.
             </p>
         </div>
     </section>
 
     <!-- Highlights -->
     <section class="mb-section">
-        <h2 class="section-heading"><span class="section-tag">Summary</span> What's Working vs. What's Pending</h2>
+        <h2 class="section-heading"><span class="section-tag">Summary</span> Current Operational State vs. Pending Work</h2>
         <div class="highlights-grid">
             <div class="hl-card">
-                <h3><span class="dot dot-green"></span>What is Operational</h3>
+                <h3><span class="dot dot-green"></span>What is Fully Operational</h3>
                 <ul class="hl-list">
-                    <li>Full infrastructure stack running in Docker (17 containers)</li>
-                    <li>PostgreSQL with WAL archiving and nightly PITR base backups via Ofelia cron (02:00)</li>
-                    <li>Prometheus scraping all 4 application services</li>
-                    <li>Grafana dashboard auto-provisioned with live metric graphs (1 overview dashboard)</li>
-                    <li>Loki + Promtail collecting logs from all containers</li>
-                    <li>REDCap mock API live on Render — all teams using it for dev</li>
-                    <li>Data platform ETL nightly sync configured via Ofelia docker-exec (01:00 daily, full refresh); container sleeps after migrate, sync triggered externally</li>
-                    <li>Backend Alembic DB schema deployed and queryable</li>
-                    <li>Admin dashboard: 3 components (StatCard stats, StressScoreTrend, AlertCard) fetching live backend data with fallback; 6+ components still hardcoded</li>
-                    <li>CI/CD across all 6 repos: automated test → build → image push (deploy job activates once DEPLOY_HOST GitHub var is set)</li>
-                    <li>Alertmanager configured with real Discord webhook alongside webhook-logger test sink; safeguarding alerts deliver to Discord channel</li>
+                    <li>Full 17-container infrastructure stack with Docker network segmentation and secrets vaulting</li>
+                    <li>Automated PostgreSQL WAL archiving and verified PITR disaster recovery runbook (<code class="mono">docs/pitr-runbook.md</code>)</li>
+                    <li>Master CRF V3.1 Handover fully implemented with 100% mathematical scoring parity against Golden Fixtures</li>
+                    <li>REDCap Data Dictionary V3.2 integrated across all layers (227 fields, consent gating, DOB age calculation)</li>
+                    <li>Backend JWT authentication with role-based access control and country-level scoping (Ghana, Sierra Leone, Tanzania)</li>
+                    <li>Data platform ETL pipeline (<code class="mono">ingest-v31</code>) scoring all 150 participants into PostgreSQL tables</li>
+                    <li>Portal Next.js web client with authenticated role dashboards, OpenAPI mock backend, and 150 simulated records</li>
+                    <li>ML/AI service connected directly to PostgreSQL data warehouse with published 240-feature offline dataset</li>
+                    <li>Automated CI/CD workflows across main and staging branches across all repositories with 100% passing tests</li>
+                    <li>Discord Alertmanager integration actively monitoring infrastructure health and safeguarding queues</li>
                 </ul>
             </div>
             <div class="hl-card">
-                <h3><span class="dot dot-amber"></span>Critical Pending Items</h3>
+                <h3><span class="dot dot-amber"></span>What is Pending / Awaiting External Approval</h3>
                 <ul class="hl-list">
-                    <li>Backend: no /api/auth/login endpoint, no User DB model, zero routes protected with JWT auth guards (helpers scaffolded only; entire API publicly accessible)</li>
-                    <li>ML/AI models not yet exposed through API endpoints (only / and /health exist; trained PKL models not loaded)</li>
-                    <li>Safeguarding escalation route and case management workflow not yet implemented (no acknowledge/assign/resolve endpoints or UI)</li>
-                    <li>PI, Country Lead, and Enumerator dashboards are "coming soon" stubs (Admin dashboard partially live-bound)</li>
-                    <li>Production TLS certificate pending institutional procurement (self-signed certs exist for local dev)</li>
-                    <li>Data-platform: incremental sync feature branch not yet merged (current nightly is full refresh only; relies on external Ofelia docker-exec)</li>
-                    <li>PITR restore drill not formally documented or tested end-to-end</li>
-                    <li>2FA enforcement in NextAuth not yet configured</li>
-                    <li>Actual documentation drafts not yet written (neps-docs: plan + confidentiality register only)</li>
+                    <li><strong>Track B Longitudinal CRFs:</strong> Clinical team (Prof. Brew / KATH) has not yet released the 24-month monthly self-report CRFs (14 parameters) and wave schedules; forms remain UNVERIFIED</li>
+                    <li><strong>Live REDCap API Credentials:</strong> Issuance of production KCHR API tokens awaits final field deployment readiness and ethical clearance</li>
+                    <li><strong>Safeguarding Escalation Triage:</strong> Formal approval of clinical referral thresholds (<code class="mono">K6 &ge; 13</code>, severe distress, suicidality) needed before automated alert dispatch is authorized</li>
+                    <li><strong>Manual Entry Live Submission:</strong> <code class="mono">POST /api/v31/baseline</code> returns HTTP 501 by design until enumerator REDCap submission integration is finalized</li>
+                    <li><strong>Production TLS Certificate:</strong> Institutional procurement from KNUST IT for the physical server environment remains pending</li>
+                    <li><strong>Multi-Country VPN Setup:</strong> Physical site-to-site VPN connection between KNUST host and Sierra Leone/Tanzania field offices to be established upon field launch</li>
                 </ul>
             </div>
         </div>
@@ -692,71 +754,77 @@
 
     <!-- Next Priorities Roadmap -->
     <section class="mb-section">
-        <h2 class="section-heading"><span class="section-tag">Roadmap</span> Next Priorities</h2>
+        <h2 class="section-heading"><span class="section-tag">Roadmap</span> Technical Milestones &amp; Phasing</h2>
         <div class="table-wrap">
             <table class="data-table">
                 <thead>
                     <tr>
                         <th>Phase</th>
-                        <th>Task</th>
+                        <th>Milestone / Task</th>
                         <th>Priority</th>
                         <th>Owner</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Phase 1 — Integration</td>
-                        <td>Load ML/AI trained models into FastAPI endpoints and wire to backend risk_models router</td>
-                        <td><span class="prio prio-crit">🔴 Critical</span></td>
-                        <td><span class="owner-chip">ML/AI Team</span></td>
-                    </tr>
-                    <tr>
-                        <td>Phase 1 — Integration</td>
-                        <td>Build safeguarding escalation endpoint in backend API</td>
-                        <td><span class="prio prio-crit">🔴 Critical</span></td>
-                        <td><span class="owner-chip">Samuel</span></td>
-                    </tr>
-                    <tr>
-                        <td>Phase 1 — Integration</td>
-                        <td>Build PI, Country Lead, and Enumerator role dashboards in the portal</td>
-                        <td><span class="prio prio-high">🟠 High</span></td>
-                        <td><span class="owner-chip">Portal Team</span></td>
-                    </tr>
-                    <tr>
-                        <td>Phase 2 — Safeguarding</td>
-                        <td>Build /dashboard/safeguarding page with live high-distress alert queue</td>
-                        <td><span class="prio prio-high">🟠 High</span></td>
-                        <td><span class="owner-chip">Portal Team</span></td>
-                    </tr>
-                    <tr>
-                        <td>Phase 2 — Safeguarding</td>
-                        <td>End-to-end safeguarding drill: mock distress submission → verify alert fires</td>
-                        <td><span class="prio prio-high">🟠 High</span></td>
+                        <td>Phase 1 — Track A (Baseline)</td>
+                        <td>Implement Master CRF V3.1 (223 vars) and V3.2 (227 vars) across all 6 core repositories</td>
+                        <td><span class="prio prio-done">✅ Delivered</span></td>
                         <td><span class="owner-chip">All Teams</span></td>
                     </tr>
                     <tr>
-                        <td>Phase 3 — Rollout</td>
-                        <td>Install production TLS certificate on KNUST server</td>
-                        <td><span class="prio prio-med">🔵 Medium</span></td>
-                        <td><span class="owner-chip">Damien</span></td>
+                        <td>Phase 1 — Track A (Baseline)</td>
+                        <td>Deliver PostgreSQL ingestion pipeline and verify golden scoring parity across 150 baseline records</td>
+                        <td><span class="prio prio-done">✅ Delivered</span></td>
+                        <td><span class="owner-chip">Data Platform</span></td>
                     </tr>
                     <tr>
-                        <td>Phase 3 — Rollout</td>
-                        <td>Configure 2FA in NextAuth and RBAC audit across all 4 roles</td>
-                        <td><span class="prio prio-med">🔵 Medium</span></td>
-                        <td><span class="owner-chip">Portal + Backend</span></td>
+                        <td>Phase 1 — Track A (Baseline)</td>
+                        <td>Harden JWT authentication, RBAC role dashboards, and country-level data scoping</td>
+                        <td><span class="prio prio-done">✅ Delivered</span></td>
+                        <td><span class="owner-chip">Backend + Portal</span></td>
                     </tr>
                     <tr>
-                        <td>Phase 3 — Rollout</td>
-                        <td>Conduct formal PITR restore drill and document RTO/RPO achieved</td>
-                        <td><span class="prio prio-med">🔵 Medium</span></td>
-                        <td><span class="owner-chip">Damien</span></td>
+                        <td>Phase 1 — Track A (Baseline)</td>
+                        <td>Connect ML/AI feature extraction directly to PostgreSQL data warehouse</td>
+                        <td><span class="prio prio-done">✅ Delivered</span></td>
+                        <td><span class="owner-chip">ML/AI Team</span></td>
                     </tr>
                     <tr>
-                        <td>Phase 3 — Rollout</td>
-                        <td>Write all 7 neps-docs documents (security, hosting, flows, AI, forms, backups)</td>
+                        <td>Phase 2 — Track B (Longitudinal)</td>
+                        <td>Receive and review official REDCap Monthly Follow-up CRFs (M1–M24, 14 parameters) from clinical team</td>
+                        <td><span class="prio prio-crit">🔴 Critical (Blocked)</span></td>
+                        <td><span class="owner-chip">Clinical / PI Team</span></td>
+                    </tr>
+                    <tr>
+                        <td>Phase 2 — Track B (Longitudinal)</td>
+                        <td>Migrate database schema for monthly reports and comprehensive waves (M06, M12, M18, M24)</td>
+                        <td><span class="prio prio-high">🟠 High (Pending CRF)</span></td>
+                        <td><span class="owner-chip">Data Platform</span></td>
+                    </tr>
+                    <tr>
+                        <td>Phase 2 — Safeguarding</td>
+                        <td>Formalize clinical safeguarding referral triage rules and automated clinician alert dispatch</td>
+                        <td><span class="prio prio-high">🟠 High</span></td>
+                        <td><span class="owner-chip">Clinical + Backend</span></td>
+                    </tr>
+                    <tr>
+                        <td>Phase 3 — Production Rollout</td>
+                        <td>Obtain and install official institutional TLS certificate from KNUST IT</td>
                         <td><span class="prio prio-med">🔵 Medium</span></td>
-                        <td><span class="owner-chip">Salamatu</span></td>
+                        <td><span class="owner-chip">Damien (DevOps)</span></td>
+                    </tr>
+                    <tr>
+                        <td>Phase 3 — Production Rollout</td>
+                        <td>Switch data platform ingestion from Render mock server to live KCHR REDCap production API</td>
+                        <td><span class="prio prio-high">🟠 High</span></td>
+                        <td><span class="owner-chip">DevOps + Backend</span></td>
+                    </tr>
+                    <tr>
+                        <td>Phase 3 — Production Rollout</td>
+                        <td>Establish multi-country secure VPN connectivity between KNUST, Sierra Leone, and Tanzania field hubs</td>
+                        <td><span class="prio prio-med">🔵 Medium</span></td>
+                        <td><span class="owner-chip">DevOps + IT</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -765,13 +833,13 @@
 
     <!-- Summary Table -->
     <section class="mb-section">
-        <h2 class="section-heading"><span class="section-tag">Table</span> Repository Summary</h2>
+        <h2 class="section-heading"><span class="section-tag">Table</span> Repository Summary &amp; Ownership</h2>
         <div class="table-wrap">
             <table class="data-table">
                 <thead>
                     <tr>
                         <th>Repository</th>
-                        <th>Purpose</th>
+                        <th>Core Architecture &amp; Purpose</th>
                         <th>Lead</th>
                         <th>Last Activity</th>
                         <th>Status</th>
@@ -780,52 +848,52 @@
                 <tbody>
                     <tr>
                         <td class="mono">neps-infrastructure</td>
-                        <td>Docker Compose, CI/CD, monitoring, PITR backups</td>
+                        <td>Docker Compose (17 services), CI/CD, PITR backup automation, network security</td>
                         <td>Damien</td>
-                        <td>Aug 2026</td>
-                        <td><span class="status-pill pill-teal">Active Dev</span></td>
+                        <td>Nov 2026</td>
+                        <td><span class="status-pill pill-teal">Live / Active Ops</span></td>
                     </tr>
                     <tr>
                         <td class="mono">neps-backend</td>
-                        <td>FastAPI REST API, DB models, REDCap proxy, sync</td>
+                        <td>FastAPI REST API, JWT auth, RBAC, V3.1/V3.2 baseline endpoints, scoring queries</td>
                         <td>Samuel</td>
-                        <td>Aug 2026</td>
-                        <td><span class="status-pill pill-blue">Active Dev</span></td>
+                        <td>Nov 2026</td>
+                        <td><span class="status-pill pill-blue">Live (Baseline) / Active Dev</span></td>
                     </tr>
                     <tr>
                         <td class="mono">neps-data-platform</td>
-                        <td>ETL pipelines, warehouse loaders, REDCap sync</td>
+                        <td>ETL scoring warehouse, Alembic 004 integrity, PostgreSQL ingestion (150 cohort)</td>
                         <td>Frank / Isaac</td>
-                        <td>Aug 2026</td>
-                        <td><span class="status-pill pill-blue">Active Dev</span></td>
+                        <td>Nov 2026</td>
+                        <td><span class="status-pill pill-green">Live</span></td>
                     </tr>
                     <tr>
                         <td class="mono">neps-portal</td>
-                        <td>Next.js web client, role dashboards, auth</td>
+                        <td>Next.js 16 client, authenticated role dashboards, mock API server, V3.2 intake form</td>
                         <td>Eric / Ama / Ghazi</td>
-                        <td>Aug 2026</td>
-                        <td><span class="status-pill pill-amber">Partial Dev</span></td>
+                        <td>Nov 2026</td>
+                        <td><span class="status-pill pill-blue">Active Dev</span></td>
                     </tr>
                     <tr>
                         <td class="mono">neps-ml-ai</td>
-                        <td>ML distress models, NLP emotion/sentiment API</td>
+                        <td>Direct PostgreSQL warehouse reader, 240-feature tabular models, 2,000-record NLP dataset</td>
                         <td>Yasmine</td>
-                        <td>Aug 2026</td>
-                        <td><span class="status-pill pill-amber">Partial Dev</span></td>
+                        <td>Nov 2026</td>
+                        <td><span class="status-pill pill-amber">Active Dev</span></td>
                     </tr>
                     <tr>
                         <td class="mono">neps-docs</td>
-                        <td>Technical documentation, deployment runbooks</td>
+                        <td>Operational runbooks, data ethics policies, pipeline testing guides, audit registers</td>
                         <td>Salamatu</td>
-                        <td>Jul 2026</td>
-                        <td><span class="status-pill pill-navy">Drafting</span></td>
+                        <td>Nov 2026</td>
+                        <td><span class="status-pill pill-teal">Active Dev</span></td>
                     </tr>
                     <tr>
                         <td class="mono">mock-redcap-service</td>
-                        <td>Hosted REDCap API sandbox (external dev utility)</td>
+                        <td>Hosted simulated REDCap API sandbox on Render, V3.2 generator, 150 participants</td>
                         <td>All Teams</td>
-                        <td>Aug 2026</td>
-                        <td><span class="status-pill pill-green">Live</span></td>
+                        <td>Nov 2026</td>
+                        <td><span class="status-pill pill-green">Live on Render</span></td>
                     </tr>
                 </tbody>
             </table>
@@ -838,6 +906,7 @@
 <footer>
     <div style="max-width:1100px;margin:0 auto;padding:0 24px;">
         <p>For more info contact <strong>Prof. Obed Brew</strong> or <strong>Dr. Linda Banning</strong> at the <strong>Centre for Artificial Intelligence in Health (CAIH), KNUST, Ghana</strong>.</p>
+        <p style="font-size:0.75rem;color:var(--slate-2);margin-top:6px;">NEPS Digital System · Navigating Educational Pressures and Stressors · Operational Status Report (Updated November 2026)</p>
     </div>
 </footer>
 
